@@ -1,10 +1,11 @@
-﻿using WorldRank.Objects;
-
+﻿using WorldRank;
+using WorldRank.Interfaces;
+using WorldRank.Objects;
 public class Program
 {
     public static void Main(string[] args)
     {
-        List<Player> players = new List<Player>();
+        InMemoryPlayerRepository repo = new InMemoryPlayerRepository(new List<IPlayer>());
 
         bool running = true;
 
@@ -24,16 +25,27 @@ public class Program
             switch (choice)
             {
                 case 1:
-                    Player.AddPlayer(players);
+                    Console.Write("Enter name: ");
+                    string nameInput = Console.ReadLine()?.Trim()!;
+                    if (string.IsNullOrWhiteSpace(nameInput))
+                    {
+                        Console.WriteLine("Name is required.");
+                        break;
+                    }
+                    Player player = new Player(nameInput);
+                    repo.AddPlayer(player);
+                    Console.WriteLine($"Player {player.Name} added with Id {player.Id}!");
                     break;
 
+
+
                 case 2:
-                    Player.ListPlayers(players);
+                    //Player.ListPlayers(players);
                     break;
 
 
                 case 3:
-                    Player.FindPlayerByName(players);
+                    //Player.FindPlayerByName(players);
                     break;
             }
         }
