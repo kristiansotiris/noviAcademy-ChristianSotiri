@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WorldRank.Interfaces
+{
+    public interface IPlayerRepository
+    {
+        void AddPlayer(IPlayer player);
+        void FindPlayer(int playerId);
+        void DeletePlayer(int playerId);
+        void GroupPlayersByScore();
+    }
+}

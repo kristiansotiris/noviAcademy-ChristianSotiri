@@ -85,7 +85,21 @@
                 return;
             }
 
-            player.Score += score;
+            if (player.Score < score && score != 0)
+            {
+
+                player.Score += score;
+            }
+            else if (player.Score > score && score != 0)
+            {
+                player.Score -= score;
+            }
+            else
+            {
+                Console.WriteLine("Score is the same, no update needed.");
+                return;
+            }
+            
 
             Console.WriteLine($"Player Score is updated to: {player.Score}");
         }
