@@ -12,8 +12,8 @@ public class Program
         while (running)
         {
             Console.WriteLine("1. Add Player");
-            Console.WriteLine("2. List Players");
-            Console.WriteLine("3. Search Player");
+            Console.WriteLine("2. Find Players");
+            Console.WriteLine("3. Group By Player");
             string? input = Console.ReadLine();
 
             if (!int.TryParse(input, out int choice))
@@ -40,12 +40,30 @@ public class Program
 
 
                 case 2:
-                    //Player.ListPlayers(players);
+                    Console.Write("Enter Player id: ");
+                    string idInput = Console.ReadLine()?.Trim()!;
+
+                    if(int.TryParse(idInput, out int playerId))
+                    {
+                        IPlayer? foundPlayer = repo.FindPlayer(playerId);
+                        if (foundPlayer != null)
+                        {
+                            Console.WriteLine($"Player found: Id: {foundPlayer.Id}, Name: {foundPlayer.Name}, Score: {foundPlayer.Score}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Player not found.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Id input.");
+                    }
                     break;
 
 
                 case 3:
-                    //Player.FindPlayerByName(players);
+                    //Group players by score and display the groups
                     break;
             }
         }

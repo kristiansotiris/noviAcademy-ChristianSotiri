@@ -34,17 +34,9 @@ namespace WorldRank.Interfaces
             _players.Remove(player);
         }
 
-        public void FindPlayer(int playerId)
+        public IPlayer? FindPlayer(int playerId)
         {
-            IPlayer? player = _players.FirstOrDefault(p => p.Id == playerId);
-
-            if (player == null)
-            {
-                Console.WriteLine("Player not found");
-                return;
-            }
-
-            Console.WriteLine($"User with id: {player.Id} Founded {player.Name}");
+            return _players.FirstOrDefault(p => p.Id == playerId);
         }
 
         public void GroupPlayersByScore()
