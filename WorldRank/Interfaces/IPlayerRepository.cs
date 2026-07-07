@@ -9,6 +9,6 @@ namespace WorldRank.Interfaces
         void AddPlayer(IPlayer player);
         IPlayer? FindPlayer(int playerId);
         void DeletePlayer(int playerId);
-        void GroupPlayersByScore();
+        IReadOnlyDictionary<int, List<IPlayer>> GroupPlayersByScore();
     }
 }

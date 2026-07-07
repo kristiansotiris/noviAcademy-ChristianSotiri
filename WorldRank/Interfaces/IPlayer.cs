@@ -6,11 +6,12 @@ namespace WorldRank.Interfaces
 {
     public interface IPlayer
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Score { get; set; }
+        public int Id { get;  }
+        public string Name { get; }
+        public int Score { get;}
         IReadOnlyList<IWallet> Wallets { get; }
+        void AssignId(int id);
+        void AddScore(int points);
         void AddWallet(IWallet wallet);
-
     }
 }

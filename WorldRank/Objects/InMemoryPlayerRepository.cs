@@ -17,7 +17,7 @@ namespace WorldRank.Interfaces
                 throw new ArgumentNullException(nameof(player), "Player cannot be null.");
             }
 
-            player.Id = _nextId++;
+            player.AssignId(_nextId++);
             _players.Add(player);
         }
 
@@ -26,10 +26,7 @@ namespace WorldRank.Interfaces
             IPlayer? player = _players.FirstOrDefault(p => p.Id == playerId);
 
             if (player == null)
-            {
-                Console.WriteLine("Player id not found");
-                return;
-            }
+                throw new InvalidOperationException($"Player with id: {playerId} is not found.");
 
             _players.Remove(player);
         }
@@ -39,15 +36,9 @@ namespace WorldRank.Interfaces
             return _players.FirstOrDefault(p => p.Id == playerId);
         }
 
-        public IReadOnlyList<IWallet>? GetPlayerWallets(int playerId)
+        public IReadOnlyDictionary<int, List<IPlayer>> GroupPlayersByScore()
         {
-            IPlayer? player = _players.FirstOrDefault(p => p.Id == playerId);
-            if (player == null) return null;
-            return player?.Wallets;
-        }
-        public void GroupPlayersByScore()
-        {
-            throw new NotImplementedException();
+            return _players.GroupBy(p => p.Score).ToDictionary(g => g.Key, g => g.ToList());
         }
     }
 }

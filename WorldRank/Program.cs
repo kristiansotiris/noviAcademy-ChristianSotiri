@@ -1,11 +1,15 @@
 ﻿using WorldRank.Enums;
 using WorldRank.Interfaces;
 using WorldRank.Objects;
+
 public class Program
 {
     public static void Main(string[] args)
     {
-        InMemoryPlayerRepository repo = new InMemoryPlayerRepository(new List<IPlayer>());
+        var players = new List<IPlayer>();
+
+        IPlayerRepository playerRepository = new InMemoryPlayerRepository(players);
+        IWalletRepository walletRepository = new InMemoryWalletRepository(players);
 
         bool running = true;
 
@@ -15,6 +19,8 @@ public class Program
             Console.WriteLine("2. Find Players");
             Console.WriteLine("3. Add Wallet");
             Console.WriteLine("4. Get Player Wallets");
+            Console.WriteLine("5. Delete Player");
+            Console.WriteLine("6. Exit");
             string? input = Console.ReadLine();
 
             if (!int.TryParse(input, out int choice))
@@ -34,8 +40,9 @@ public class Program
                             Console.WriteLine("Name is required.");
                             break;
                         }
+
                         Player player = new Player(nameInput);
-                        repo.AddPlayer(player);
+                        playerRepository.AddPlayer(player);
                         Console.WriteLine($"Player {player.Name} added with Id {player.Id}!");
                         break;
                     }
@@ -43,19 +50,13 @@ public class Program
                 case 2:
                     {
                         Console.Write("Enter Player id: ");
-                        string idInput = Console.ReadLine()?.Trim()!;
-
-                        if (int.TryParse(idInput, out int playerId))
+                        if (int.TryParse(Console.ReadLine()?.Trim(), out int playerId))
                         {
-                            IPlayer? foundPlayer = repo.FindPlayer(playerId);
+                            IPlayer? foundPlayer = playerRepository.FindPlayer(playerId);
                             if (foundPlayer != null)
-                            {
                                 Console.WriteLine($"Player found: Id: {foundPlayer.Id}, Name: {foundPlayer.Name}, Score: {foundPlayer.Score}");
-                            }
                             else
-                            {
                                 Console.WriteLine("Player not found.");
-                            }
                         }
                         else
                         {
@@ -66,41 +67,30 @@ public class Program
 
                 case 3:
                     {
-                        Console.WriteLine("Enter your id: ");
+                        Console.Write("Enter your id: ");
                         if (!int.TryParse(Console.ReadLine(), out int id))
                         {
                             Console.WriteLine("Invalid id");
                             break;
                         }
 
-                        IPlayer? founded = repo.FindPlayer(id);
-                        if (founded == null)
-                        {
-                            Console.WriteLine("Player not found.");
-                            break;
-                        }
-
                         Console.Write("Enter currency (EUR/USD/GBP): ");
-
                         string inputCurrency = Console.ReadLine()!.Trim();
 
-                        if (!Enum.TryParse<CurrencyEnums>(inputCurrency, true, out CurrencyEnums currency))
+                        if (!Enum.TryParse<Currency>(inputCurrency, true, out Currency currency))
                         {
                             Console.WriteLine("Invalid currency!");
                             break;
-
                         }
 
                         try
                         {
-                            Player p = (Player)founded;
-                            p.AddWallet(new Wallet(currency));
-                            Console.WriteLine($"{currency} wallet added to {founded.Name}.");
+                            walletRepository.AddWallet(new Wallet(currency), id);
+                            Console.WriteLine($"{currency} wallet added to player {id}.");
                         }
                         catch (InvalidOperationException ex)
                         {
-                            Console.WriteLine(ex);
-
+                            Console.WriteLine(ex.Message);
                         }
                         break;
                     }
@@ -110,18 +100,20 @@ public class Program
                         Console.Write("Enter player Id: ");
                         if (int.TryParse(Console.ReadLine(), out int id))
                         {
-                            IReadOnlyList<IWallet>? wallets = repo.GetPlayerWallets(id);
-
-                            if (wallets == null) Console.WriteLine("Player not found.");
-                            else if (wallets.Count == 0) Console.WriteLine("There's no any wallets for this player.");
-                            else
+                            try
                             {
-                                foreach (IWallet w in wallets)
-                                {
-                                    Console.WriteLine($"{w.Currency} - {w.Balance}");
-                                }
-                            }
+                                IReadOnlyList<IWallet> wallets = walletRepository.GetWalletsByPlayer(id);
 
+                                if (wallets.Count == 0)
+                                    Console.WriteLine("This player has no wallets.");
+                                else
+                                    foreach (IWallet w in wallets)
+                                        Console.WriteLine($"{w.Currency} - {w.Balance}");
+                            }
+                            catch (InvalidOperationException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                         }
                         else
                         {
@@ -129,6 +121,36 @@ public class Program
                         }
                         break;
                     }
+
+                case 5:
+                    {
+                        Console.Write("Enter player Id to delete: ");
+                        if (int.TryParse(Console.ReadLine(), out int id))
+                        {
+                            try
+                            {
+                                playerRepository.DeletePlayer(id);
+                                Console.WriteLine($"Player {id} deleted.");
+                            }
+                            catch (InvalidOperationException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Id");
+                        }
+                        break;
+                    }
+
+                case 6:
+                    running = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Please choose a valid option (1-6).");
+                    break;
             }
         }
     }

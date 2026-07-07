@@ -6,10 +6,10 @@ using WorldRank.Interfaces;
 
 namespace WorldRank.Objects
 {
-    public class Wallet(CurrencyEnums currency) : IWallet
+    public class Wallet(Currency currency) : IWallet
     {
         public decimal Balance { get; private set; }
-        public CurrencyEnums Currency { get; } = currency;
+        public Currency Currency { get; } = currency;
         public bool IsBlocked { get; set; }
 
         

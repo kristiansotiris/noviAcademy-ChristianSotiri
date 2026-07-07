@@ -8,7 +8,7 @@ namespace WorldRank.Interfaces
     public interface IWallet
     {
         decimal Balance { get; }
-        CurrencyEnums Currency { get; }
+        Currency Currency { get; }
         bool IsBlocked { get; set; }
     }
 }

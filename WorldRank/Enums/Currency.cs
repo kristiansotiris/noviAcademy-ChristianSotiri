@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorldRank.Enums
 {
-   public enum CurrencyEnums
+   public enum Currency
     {
         USD,
         EUR,
