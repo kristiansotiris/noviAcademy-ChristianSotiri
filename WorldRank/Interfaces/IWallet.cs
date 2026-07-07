@@ -10,5 +10,8 @@ namespace WorldRank.Interfaces
         decimal Balance { get; }
         Currency Currency { get; }
         bool IsBlocked { get; set; }
+
+        void Deposit(decimal amount);
+        void Withdraw(decimal amount);
     }
 }

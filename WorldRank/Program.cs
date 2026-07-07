@@ -20,7 +20,8 @@ public class Program
             Console.WriteLine("3. Add Wallet");
             Console.WriteLine("4. Get Player Wallets");
             Console.WriteLine("5. Delete Player");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("6. Deposit");
+            Console.WriteLine("7. Exit");
             string? input = Console.ReadLine();
 
             if (!int.TryParse(input, out int choice))
@@ -144,7 +145,52 @@ public class Program
                         break;
                     }
 
-                case 6:
+
+                case 6: 
+                    {
+                        Console.Write("Enter player Id: ");
+                        if (!int.TryParse(Console.ReadLine(), out int id))
+                        {
+                            Console.WriteLine("Invalid Id");
+                            break;
+                        }
+
+                        Console.Write("Enter currency (EUR/USD/GBP): ");
+                        if (!Enum.TryParse<Currency>(Console.ReadLine()!.Trim(), true, out Currency currency))
+                        {
+                            Console.WriteLine("Invalid currency!");
+                            break;
+                        }
+
+                        Console.Write("Enter amount: ");
+                        if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
+                        {
+                            Console.WriteLine("Invalid amount!");
+                            break;
+                        }
+
+                        try
+                        {
+                            IReadOnlyList<IWallet> wallets = walletRepository.GetWalletsByPlayer(id);
+                            IWallet? wallet = wallets.FirstOrDefault(w => w.Currency == currency);
+
+                            if (wallet == null)
+                            {
+                                Console.WriteLine($"Player {id} has no {currency} wallet.");
+                                break;
+                            }
+
+                            wallet.Deposit(amount);
+                            Console.WriteLine($"Deposited {amount} {currency}. New balance: {wallet.Balance}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    }
+
+                case 7:
                     running = false;
                     break;
 
