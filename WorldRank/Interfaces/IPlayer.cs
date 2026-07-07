@@ -9,6 +9,8 @@ namespace WorldRank.Interfaces
         public int Id { get; set; }
         public string Name { get; set; }
         public int Score { get; set; }
+        IReadOnlyList<IWallet> Wallets { get; }
+        void AddWallet(IWallet wallet);
 
     }
 }

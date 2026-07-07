@@ -39,6 +39,12 @@ namespace WorldRank.Interfaces
             return _players.FirstOrDefault(p => p.Id == playerId);
         }
 
+        public IReadOnlyList<IWallet>? GetPlayerWallets(int playerId)
+        {
+            IPlayer? player = _players.FirstOrDefault(p => p.Id == playerId);
+            if (player == null) return null;
+            return player?.Wallets;
+        }
         public void GroupPlayersByScore()
         {
             throw new NotImplementedException();
