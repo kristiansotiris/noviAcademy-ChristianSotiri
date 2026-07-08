@@ -37,6 +37,16 @@ namespace WorldRank.Objects
             _players.Remove(player);
         }
 
+        public IReadOnlyList<IPlayer> GetAllPlayers()
+        {
+            if (_players.Count == 0)
+            {
+                _logger.LogInformation("No players found in the repository.");
+                return new List<IPlayer>();
+            }
+                return _players.AsReadOnly();
+        }
+
         public IPlayer? FindPlayer(int playerId)
         {
             return _players.FirstOrDefault(p => p.Id == playerId);
