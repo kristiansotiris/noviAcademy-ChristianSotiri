@@ -31,7 +31,6 @@ namespace WorldRank.Objects
 
         public void AssignId(int id)
         {
-
             Id = id;
         }
     }
