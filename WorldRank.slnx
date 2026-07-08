@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="nlog.config" />
+  </Folder>
   <Project Path="WorldRank/WorldRank.csproj" />
 </Solution>

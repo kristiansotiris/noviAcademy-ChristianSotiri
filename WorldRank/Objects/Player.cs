@@ -29,9 +29,6 @@ namespace WorldRank.Objects
             _wallets.Add(wallet.Currency, wallet);
         }
 
-        public void AssignId(int id)
-        {
-            Id = id;
-        }
+        public void AssignId(int id) => Id = id;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using WorldRank.Enums;
+using WorldRank.Exceptions;
 using WorldRank.Interfaces;
 
 namespace WorldRank.Objects
@@ -25,10 +26,10 @@ namespace WorldRank.Objects
         public void Withdraw(decimal amount)
         {
             if (amount <= 0)
-                throw new ArgumentException("Withdrawal amount must be positive.", nameof(amount));
+                throw new InsufficientFundsException(amount, Balance);
 
             if (IsBlocked)
-                throw new InvalidOperationException("Cannot withdraw from a blocked wallet.");
+                throw new WalletBlockedException(Currency);
 
             if (amount > Balance)
                 throw new InvalidOperationException("Insufficient funds.");

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using NLog;
 using WorldRank.Enums;
 using WorldRank.Interfaces;
 using WorldRank.Objects;
@@ -10,8 +11,16 @@ public class Program
         using var loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddConsole();
-            builder.SetMinimumLevel(LogLevel.Information);
+            builder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
         });
+
+        var logger = LogManager.GetCurrentClassLogger();
+
+        logger.Info("Application started.");
+        logger.Warn("This is a warning message.");
+        logger.Error("This is an error message.");
+
+        LogManager.Shutdown();
 
         var players = new List<IPlayer>();
 
