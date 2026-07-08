@@ -1,4 +1,5 @@
-﻿using WorldRank.Enums;
+﻿using Microsoft.Extensions.Logging;
+using WorldRank.Enums;
 using WorldRank.Interfaces;
 using WorldRank.Objects;
 
@@ -6,10 +7,19 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+            builder.SetMinimumLevel(LogLevel.Information);
+        });
+
         var players = new List<IPlayer>();
 
-        IPlayerRepository playerRepository = new InMemoryPlayerRepository(players);
-        IWalletRepository walletRepository = new InMemoryWalletRepository(players);
+        ILogger<InMemoryPlayerRepository> playerRepoLogger = loggerFactory.CreateLogger<InMemoryPlayerRepository>();
+        ILogger<InMemoryWalletRepository> walletRepoLogger = loggerFactory.CreateLogger<InMemoryWalletRepository>();
+
+        IPlayerRepository playerRepository = new InMemoryPlayerRepository(players, playerRepoLogger);
+        IWalletRepository walletRepository = new InMemoryWalletRepository(players, walletRepoLogger);
 
         bool running = true;
 
@@ -146,7 +156,7 @@ public class Program
                     }
 
 
-                case 6: 
+                case 6:
                     {
                         Console.Write("Enter player Id: ");
                         if (!int.TryParse(Console.ReadLine(), out int id))
@@ -195,7 +205,7 @@ public class Program
                     break;
 
                 default:
-                    Console.WriteLine("Please choose a valid option (1-6).");
+                    Console.WriteLine("Please choose a valid option (1-7).");
                     break;
             }
         }

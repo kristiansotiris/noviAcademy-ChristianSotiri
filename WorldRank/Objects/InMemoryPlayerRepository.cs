@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using WorldRank.Interfaces;
-
+using Microsoft.Extensions.Logging;
 namespace WorldRank.Objects
 {
-    public class InMemoryPlayerRepository(List<IPlayer> players) : IPlayerRepository
+    public class InMemoryPlayerRepository(List<IPlayer> players, ILogger<InMemoryPlayerRepository> logger) : IPlayerRepository
     {
+        private readonly ILogger<InMemoryPlayerRepository> _logger = logger;
         private List<IPlayer> _players = players;
         private int _nextId = 1;
 
         public void AddPlayer(IPlayer player)
         {
-
+         
             if (player == null)
             {
-                throw new ArgumentNullException(nameof(player), "Player cannot be null.");
+                _logger.LogWarning("Attempted to add a null player.");
+                return;
             }
 
             player.AssignId(_nextId++);
@@ -27,7 +29,10 @@ namespace WorldRank.Objects
             IPlayer? player = _players.FirstOrDefault(p => p.Id == playerId);
 
             if (player == null)
-                throw new InvalidOperationException($"Player with id: {playerId} is not found.");
+            {
+                _logger.LogWarning($"Attempted to delete a player with ID {playerId}, but no such player exists.");
+                return; 
+            }
 
             _players.Remove(player);
         }
