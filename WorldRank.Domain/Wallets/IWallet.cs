@@ -1,11 +1,10 @@
-using WorldRank.Console.Enums;
 
-namespace WorldRank.Console
+namespace WorldRank.Domain.Wallets
 {
 	public interface IWallet
 	{
 		int PlayerId { get; }
-		Currency Currency { get; }
+		Currency.Currency Currency { get; }
 		decimal Balance { get; }
 		bool IsBlocked { get; }
 

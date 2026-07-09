@@ -1,6 +1,8 @@
 using NLog;
-using WorldRank.Console.Enums;
-using WorldRank.Console.Exceptions;
+using WorldRank.Application.Interfaces;
+using WorldRank.Domain.Currency;
+using WorldRank.Domain.Exceptions;
+using WorldRank.Domain.Wallets;
 
 namespace WorldRank.Console
 {
