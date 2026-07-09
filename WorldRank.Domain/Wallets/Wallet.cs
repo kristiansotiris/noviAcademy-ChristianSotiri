@@ -58,6 +58,21 @@ namespace WorldRank.Domain.Wallets
 			Balance = newBalance;
 		}
 
+		public void ForceSubtract(decimal amount)
+		{
+			if (amount <= 0)
+				throw new InvalidAmountException(amount);
+
+			Balance -= amount;
+
+			//var newBalance = Balance - amount;
+			//if (newBalance < 0)
+			//	throw new InsufficientFundsException(newBalance);
+			//Balance = newBalance;
+		}
+
+
+
 		public override string ToString() => $"Balance -> {Balance} Currency -> {Currency} IsBlocked -> {IsBlocked}";
 	}
 }
