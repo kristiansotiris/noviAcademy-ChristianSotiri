@@ -23,7 +23,7 @@
             }
 
             Player p = new(nameInput);
-            player.Add(p);
+            player.Add(p);  
 
             Console.WriteLine($"Player {nameInput} is added !");
 
