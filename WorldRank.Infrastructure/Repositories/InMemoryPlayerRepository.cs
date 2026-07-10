@@ -7,7 +7,6 @@ namespace WorldRank.Infrastructure.Repositories
 	public class InMemoryPlayerRepository : IPlayerRepository
 	{
 		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
 		private List<Player> _players;
 
 		public InMemoryPlayerRepository()
