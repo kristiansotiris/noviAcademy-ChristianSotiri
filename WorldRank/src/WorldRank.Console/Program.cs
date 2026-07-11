@@ -1,9 +1,13 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using WorldRank.src.WorldRank.Application.Services;
 using WorldRank.src.WorldRank.Console;
 
 var logger = LogManager.GetCurrentClassLogger();
+
+var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+var connectionString = configuration.GetConnectionString("WorldRankDb");
 
 // Composition root: register every layer's services, then build the container.
 var services = new ServiceCollection();
@@ -15,6 +19,8 @@ var playerService = provider.GetRequiredService<PlayerService>();
 var walletService = provider.GetRequiredService<WalletService>();
 
 logger.Info("Application started.");
+
+
 
 while (true)
 {

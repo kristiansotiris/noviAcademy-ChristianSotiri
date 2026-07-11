@@ -8,15 +8,31 @@ namespace WorldRank.Infrastructure.Contexts
         public DbSet<Player> Players { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
 
-        public WorldRankDbContext(DbContextOptions<WorldRankDbContext> options) : base(options){ }
+        public WorldRankDbContext(DbContextOptions<WorldRankDbContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            modelBuilder.Entity<Player>(entity =>
             {
-                optionsBuilder.UseSqlite("Data Source=worldrank.db");
-            }
-        }
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Id).ValueGeneratedOnAdd();
+                entity.Property(p => p.Name).IsRequired().HasMaxLength(200);
+                entity.Property(p => p.Score);
+            });
 
+            modelBuilder.Entity<Wallet>(entity =>
+            {
+                entity.HasKey(w => w.Id);
+                entity.Property(w => w.Id).ValueGeneratedOnAdd();
+                entity.Property(w => w.PlayerId).IsRequired();
+                entity.Property(w => w.Currency).HasConversion<string>();
+                entity.Property(w => w.Balance).HasColumnType("decimal(18,2)");
+                entity.Property(w => w.IsBlocked);
+
+                entity.HasIndex(w => new { w.PlayerId, w.Currency }).IsUnique();
+            });
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

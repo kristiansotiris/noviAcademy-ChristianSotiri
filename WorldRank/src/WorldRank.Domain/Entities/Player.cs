@@ -2,7 +2,7 @@ namespace WorldRank.src.WorldRank.Domain.Entities;
 
 public class Player : IPlayer
 {
-	public int Id { get; }
+	public int Id { get; private set; }
 	public string Name { get; private set; }
 	public int Score { get; private set; }
 

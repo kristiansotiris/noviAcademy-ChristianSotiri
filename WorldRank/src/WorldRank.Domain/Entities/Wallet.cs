@@ -5,9 +5,9 @@ namespace WorldRank.src.WorldRank.Domain.Entities;
 
 public class Wallet : IWallet
 {
-	public int Id { get; }
+	public int Id { get; private set; }
 	public Currency Currency { get; }
-	public int PlayerId { get; }
+	public int PlayerId { get; private set; }
 	public decimal Balance { get; private set; }
 	public bool IsBlocked { get; private set; }
 
