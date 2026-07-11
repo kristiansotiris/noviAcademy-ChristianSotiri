@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using WorldRank.Domain.Entities;
 using WorldRank.src.WorldRank.Application.Interfaces;
 using WorldRank.src.WorldRank.Application.Strategies;
+using WorldRank.src.WorldRank.Domain.Entities;
 using WorldRank.src.WorldRank.Domain.Exceptions;
 using SysConsole = System.Console;
 namespace WorldRank.src.WorldRank.Application.Services;

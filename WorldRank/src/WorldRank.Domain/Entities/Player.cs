@@ -6,9 +6,9 @@ public class Player : IPlayer
 	public string Name { get; private set; }
 	public int Score { get; private set; }
 
-	public Player()
+	public Player(string name)
 	{
-	 //
+		Name = name;
 	}
 
 	public Player(int id, string name, int score)

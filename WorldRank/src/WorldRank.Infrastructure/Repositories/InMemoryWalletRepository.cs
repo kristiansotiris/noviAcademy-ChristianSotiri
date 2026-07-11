@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
-using WorldRank.Domain.Exceptions;
 using WorldRank.src.WorldRank.Application.Interfaces;
 using WorldRank.src.WorldRank.Domain.Entities;
 using WorldRank.src.WorldRank.Domain.Enums;
+using WorldRank.src.WorldRank.Domain.Exceptions;
 
 namespace WorldRank.src.WorldRank.Infrastructure.Repositories;
 
