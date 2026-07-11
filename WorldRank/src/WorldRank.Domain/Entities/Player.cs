@@ -35,6 +35,5 @@ public class Player : IPlayer
 
 		Score += points;
 	}
-
 	public override string ToString() => $"[{Id}] {Name} - Score: {Score}";
 }
