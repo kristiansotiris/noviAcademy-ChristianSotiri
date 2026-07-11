@@ -1,2 +1,1 @@
-# noviAcademy-ChristianSotiri
-Novibet Academy Project
+# novi-Academy-BabisTs
