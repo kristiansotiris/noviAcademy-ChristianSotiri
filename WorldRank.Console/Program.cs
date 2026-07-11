@@ -11,7 +11,7 @@ var connectionString = configuration.GetConnectionString("WorldRankDb");
 
 // Composition root: register every layer's services, then build the container.
 var services = new ServiceCollection();
-services.AddWorldRank();
+services.AddWorldRank(connectionString);
 
 using var provider = services.BuildServiceProvider();
 
