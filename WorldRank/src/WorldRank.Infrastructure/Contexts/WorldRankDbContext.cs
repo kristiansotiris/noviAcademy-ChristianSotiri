@@ -8,9 +8,15 @@ namespace WorldRank.Infrastructure.Contexts
         public DbSet<Player> Players { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
 
+        public WorldRankDbContext(DbContextOptions<WorldRankDbContext> options) : base(options){ }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite("Data Source=worldrank.db");
+            }
         }
+
     }
 }
