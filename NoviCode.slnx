@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/NoviCode/" />
+  <Folder Name="/NoviCode/src/">
+    <Project Path="NoviCode/src/NoviCode.Api/NoviCode.Api.csproj" />
+    <Project Path="NoviCode/src/NoviCode.Application/NoviCode.Application.csproj" />
+    <Project Path="NoviCode/src/NoviCode.Domain/NoviCode.Domain.csproj" />
+    <Project Path="NoviCode/src/NoviCode.Infrastructure/NoviCode.Infrastructure.csproj" />
+  </Folder>
+</Solution>
