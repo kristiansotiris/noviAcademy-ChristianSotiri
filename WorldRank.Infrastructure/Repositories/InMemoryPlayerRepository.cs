@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using WorldRank.Application.Interfaces;
 using WorldRank.Console;
@@ -8,10 +9,11 @@ namespace WorldRank.Infrastructure.Repositories
 	{
 		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 		private List<Player> _players;
-
-		public InMemoryPlayerRepository()
+		private readonly IMemoryCache _cache;
+        public InMemoryPlayerRepository(IMemoryCache memoryCache)
 		{
 			_players = new List<Player>();
+			_cache = memoryCache;
 		}
 
 		public void AddPlayer(Player player)
@@ -22,8 +24,14 @@ namespace WorldRank.Infrastructure.Repositories
 
 		public IEnumerable<Player> GetAllPlayers()
 		{
-			// Return a copy so callers cannot mutate the repository's internal list.
-			return _players.ToList();
+            if (_cache.TryGetValue("AllPlayersKey", out IReadOnlyList<Player>? cached) && cached is not null)
+            {
+                return cached;
+            }
+
+			_cache.Set("AllPlayersKey", _players, TimeSpan.FromSeconds(60));
+            // Return a copy so callers cannot mutate the repository's internal list.
+            return _players.ToList();
 		}
 
 		public void DeletePlayer(int playerId)
