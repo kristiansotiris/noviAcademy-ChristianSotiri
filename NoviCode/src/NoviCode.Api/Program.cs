@@ -1,9 +1,11 @@
-using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
 using NoviCode;
+using NoviCode.Behaviors;
+using NoviCode.Queries.Players;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,13 @@ builder.Host.ConfigureContainer<ContainerBuilder>(container =>
 	container.RegisterModule(new InfrastructureModule());
 });
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(GetPlayerByIdQuery).Assembly);
+
+    cfg.AddOpenBehavior(typeof(CachingBehavior<,>));   // εξωτερικό στρώμα
+    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));   // εσωτερικό στρώμα
+});
 // Logging via NLog (same nlog.config layout as the Console app).
 builder.Logging.ClearProviders();
 builder.Logging.AddNLog("nlog.config");

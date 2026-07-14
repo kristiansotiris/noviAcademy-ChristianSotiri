@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NoviCode.Infrastructure
+﻿namespace NoviCode.Infrastructure
 {
     public interface ICreatePlayerPersistence
     {

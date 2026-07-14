@@ -13,6 +13,7 @@
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.3.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
+    <PackageReference Include="NSubstitute" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Queries\Players\" />
   </ItemGroup>
 
 </Project>
