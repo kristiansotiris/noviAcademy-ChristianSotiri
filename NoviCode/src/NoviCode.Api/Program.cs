@@ -1,9 +1,19 @@
 using System.Text.Json.Serialization;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
 using NoviCode;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(container =>
+{
+	container.RegisterModule(new ApplicationModule());
+	container.RegisterModule(new InfrastructureModule());
+});
 
 // Logging via NLog (same nlog.config layout as the Console app).
 builder.Logging.ClearProviders();
@@ -34,6 +44,8 @@ builder.Services.AddControllers()
 // Swagger / OpenAPI — interactive API docs at /swagger.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 var app = builder.Build();
 
