@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿
 namespace NoviCode
 {
@@ -20,5 +21,20 @@ namespace NoviCode
         }
 
 
+=======
+﻿namespace NoviCode
+{
+    public class CurrencyRates
+    {
+        public string Currency { get; } = null!;
+        public decimal Rate { get; }
+        public DateTime Date { get; }
+        public CurrencyRates(string currenty, decimal rate, DateTime date)
+        {
+            Currency = currenty;
+            Rate = rate;
+            Date = date;
+        }
+>>>>>>> 4998a994585b665c2b90b4abd81f86c2741ff245
     }
 }

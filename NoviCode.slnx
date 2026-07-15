@@ -6,5 +6,9 @@
     <Project Path="NoviCode/src/NoviCode.Domain/NoviCode.Domain.csproj" />
     <Project Path="NoviCode/src/NoviCode.Infrastructure/NoviCode.Infrastructure.csproj" />
   </Folder>
+<<<<<<< HEAD
   <Project Path="NoviCode.Gateway/NoviCode.Gateway.csproj" Id="924407d9-29c2-4740-8f52-3065ecb96a60" />
+=======
+  <Project Path="Novicode.Gateway/Novicode.Gateway.csproj" Id="b7c92df0-e05b-46dd-9f96-e95213e9318b" />
+>>>>>>> 4998a994585b665c2b90b4abd81f86c2741ff245
 </Solution>

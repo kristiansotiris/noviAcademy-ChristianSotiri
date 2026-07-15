@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NoviCode.Infrastructure;
 
-
 namespace NoviCode.Commands.Players
 {
     public class CreatePlayerCommandHandler : IRequestHandler<CreatePlayerCommand, Guid>
