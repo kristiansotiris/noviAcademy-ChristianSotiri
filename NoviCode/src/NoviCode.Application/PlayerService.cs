@@ -25,7 +25,7 @@ public class PlayerService : IPlayerService
 
 	public async Task<Player> CreateAsync(string name, int score, CancellationToken cancellationToken = default)
 	{
-		var player = new Player(name); // throws on empty name
+		var player = Player.CreateNew(name); // throws on empty name
 		player.UpdateScore(score);     // throws on negative score
 
 		await _players.AddAsync(player, cancellationToken); // DB first

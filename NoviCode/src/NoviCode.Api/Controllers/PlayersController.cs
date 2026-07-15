@@ -1,4 +1,6 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NoviCode.Commands.Players;
 
 namespace NoviCode.Api;
 
@@ -7,17 +9,22 @@ namespace NoviCode.Api;
 public class PlayersController : ControllerBase
 {
 	private readonly IPlayerService _players;
+	private readonly IMediator _mediator;
 
-	public PlayersController(IPlayerService players) => _players = players;
+	public PlayersController(IPlayerService players, IMediator mediator)
+	{
+        _players = players;
+		_mediator = mediator;
+    }
 
 	// POST /players — create a player (the decorator writes through to the cache).
 	[HttpPost]
 	public async Task<IActionResult> Create([FromBody] CreatePlayerRequest request, CancellationToken cancellationToken)
 	{
-		Player player;
+		Guid id;
 		try
 		{
-			player = await _players.CreateAsync(request.Name, request.Score, cancellationToken);
+			id = await _mediator.Send(new CreatePlayerCommand(request.Name, request.Score), cancellationToken);
 		}
 		catch (ArgumentException ex)
 		{
@@ -25,7 +32,7 @@ public class PlayersController : ControllerBase
 			return BadRequest(new { error = ex.Message });
 		}
 
-		return CreatedAtAction(nameof(GetById), new { id = player.Id }, PlayerResponse.From(player));
+		return CreatedAtAction(nameof(GetById), new { id = id });
 	}
 
 	// GET /players/{id} — 200 or 404 (caching handled by the decorator).
