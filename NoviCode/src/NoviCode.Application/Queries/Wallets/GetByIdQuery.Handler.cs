@@ -1,5 +1,4 @@
 ﻿using MediatR;
-
 namespace NoviCode.Queries.Wallets
 {
     public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, Wallet>

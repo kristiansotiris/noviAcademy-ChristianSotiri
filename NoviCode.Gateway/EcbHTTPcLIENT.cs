@@ -13,16 +13,9 @@ namespace Novicode.Gateway
             _httpClient = httpClient;
         }
 
-        public async Task<IReadOnlyList<CurrencyRateDto>> GetLatestRatesAsync(CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<CurrencyRateDto>> GetLatestRatesAsync(CancellationToken cancellationToken = default)
         {
-           var response = await _httpClient.GetAsync("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
-
-           var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-
-           var serializer = new XmlSerializer(typeof(CurrencyRateDto));
-
-           var responseDto = serializer.Deserialize(stream);
-
+            throw new NotImplementedException();
         }
     }
 }
