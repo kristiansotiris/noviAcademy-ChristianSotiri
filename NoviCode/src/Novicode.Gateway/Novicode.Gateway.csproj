@@ -7,8 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
+    <PackageReference Include="Microsoft.Extensions.Http" Version="11.0.0-preview.6.26359.118" />
+    <PackageReference Include="Quartz" Version="3.18.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NoviCode\src\NoviCode.Domain\NoviCode.Domain.csproj" />
+    <ProjectReference Include="..\NoviCode\src\NoviCode.Infrastructure\NoviCode.Infrastructure.csproj" />
+=======
     <ProjectReference Include="..\NoviCode\src\NoviCode.Application\NoviCode.Application.csproj" />
     <ProjectReference Include="..\NoviCode\src\NoviCode.Domain\NoviCode.Domain.csproj" />
+>>>>>>> 4998a994585b665c2b90b4abd81f86c2741ff245
   </ItemGroup>
 
 </Project>
