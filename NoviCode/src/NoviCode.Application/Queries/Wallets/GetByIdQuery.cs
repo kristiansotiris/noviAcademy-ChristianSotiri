@@ -2,5 +2,5 @@
 
 namespace NoviCode.Queries.Wallets
 {
-    public record GetByIdQuery(Guid WalletId) : IRequest<Wallet>;
+    public record GetByIdQuery(Guid WalletId) : IRequest<Wallet?>;
 }

@@ -24,7 +24,7 @@ public class PlayersController : ControllerBase
 		Guid id;
 		try
 		{
-			id = await _mediator.Send(new CreatePlayerCommand(request.Name, request.Score));
+			id = await _mediator.Send(new CreatePlayerCommand(request.Name, request.Score), cancellationToken);
 		}
 		catch (ArgumentException ex)
 		{
