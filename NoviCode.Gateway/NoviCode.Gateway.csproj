@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NoviCode\src\NoviCode.Application\NoviCode.Application.csproj" />
+    <ProjectReference Include="..\NoviCode\src\NoviCode.Domain\NoviCode.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

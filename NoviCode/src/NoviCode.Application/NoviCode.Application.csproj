@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NoviCode.Domain\NoviCode.Domain.csproj" />
+	  <ProjectReference Include="..\NoviCode.Domain\NoviCode.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
