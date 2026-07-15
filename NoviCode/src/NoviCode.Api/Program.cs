@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
 using NoviCode;
 using NoviCode.Behaviors;
+using NoviCode.Gateway;
+using NoviCode.Gateway.Jobs;
 using NoviCode.Queries.Players;
+using Quartz;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +27,17 @@ builder.Services.AddMediatR(cfg =>
     cfg.AddOpenBehavior(typeof(CachingBehavior<,>));   // εξωτερικό στρώμα
     cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));   // εσωτερικό στρώμα
 });
+
+builder.Services.AddQuartz(q =>
+{
+	var jobkey = new JobKey("fetch-ecb-rates");
+	q.AddJob<FetchEcbRatesJob>(opt => opt.WithIdentity(jobkey));
+    q.AddTrigger(opts => opts
+       .ForJob(jobkey)
+       .WithCronSchedule("0 2 * * ?"));
+});
+
+builder.Services.AddGateway();
 // Logging via NLog (same nlog.config layout as the Console app).
 builder.Logging.ClearProviders();
 builder.Logging.AddNLog("nlog.config");
@@ -53,7 +67,8 @@ builder.Services.AddControllers()
 // Swagger / OpenAPI — interactive API docs at /swagger.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddQuartzHostedService(opts => opts.WaitForJobsToComplete = true);
+builder.Services.AddGateway();
 
 
 var app = builder.Build();
